@@ -1,11 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+// var createError = require('http-errors');
+// var express = require('express');
+// var path = require('path');
+// var cookieParser = require('cookie-parser');
+// var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
+
+import createError from 'http-errors'
+import express from 'express'
+import path from 'path'
+import cookieParser from 'cookie-parser'
+import logger from 'morgan'
+import indexRouter from './routes/index'
+import usersRouter from './routes/users'
+
 
 var app = express();
 
@@ -28,6 +37,10 @@ app.use(function(req, res, next) {
 });
 
 // error handler
+/* 
+这里点进去看时，发现使用了联合类型，但 ts 没有正确的类型推断。
+所以，需要类型断言。
+*/
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -36,6 +49,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
+} as express.ErrorRequestHandler);
 
-module.exports = app;
+export default app;
