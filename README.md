@@ -179,7 +179,7 @@ npm i nodemon -D
 
 以上，基于 ts 的服务端环境搭建完毕。
 
-
+--- 
 
 ## 39，实现数据库操作
 
@@ -214,5 +214,14 @@ npm i mysql @types/mysql -D
 
 需要改造 `routes\employee.ts`，
 
+--- 
 
+## 40，导出Excel
 
+使用的 [excel-export](https://www.npmjs.com/package/excel-export)，
+
+但是没有声明文件，所以需要自己编写，`routes\excel-export.d.ts`，
+
+声明文件放在项目任何地方都可以，放在同级目录下是为了统一管理。
+
+在 `routes\employee.ts` 中添加了下载的路由。

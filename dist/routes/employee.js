@@ -42,7 +42,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 // body-parser 是一个HTTP请求体解析中间件
 var body_parser_1 = __importDefault(require("body-parser"));
-// import excelExport from 'excel-export';
+// 下载相关
+var excel_export_1 = __importDefault(require("excel-export"));
 var query_1 = __importDefault(require("../models/query"));
 var router = express_1.default.Router();
 // 创建 application/x-www-form-urlencoded 解析
@@ -185,28 +186,39 @@ router.post('/updateEmployee', function (req, res) { return __awaiter(void 0, vo
         }
     });
 }); });
-// let conf: excelExport.Config = {
-//     cols: [
-//         { caption:'员工ID', type:'number'},
-//         { caption:'姓名', type:'string'},
-//         { caption:'部门', type:'string' },
-//         { caption:'入职时间', type:'string' },
-//         { caption:'职级', type:'string'}
-//     ],
-//     rows: []
-// };
-// router.get('/downloadEmployee', async (req, res) => {
-//     try {
-//         let result = await query(queryAllSQL);
-//         conf.rows = result.map((i: any) => {
-//             return [i.id, i.name, i.department, i.hiredate, i.level];
-//         });
-//         let excel = excelExport.execute(conf);
-//         res.setHeader('Content-Type', 'application/vnd.openxmlformats');
-//         res.setHeader('Content-Disposition', 'attachment; filename=Employee.xlsx');
-//         res.end(excel, 'binary');
-//     } catch (e) {
-//         res.send(e.toString());
-//     }
-// });
+var conf = {
+    cols: [
+        { caption: '员工ID', type: 'number' },
+        { caption: '姓名', type: 'string' },
+        { caption: '部门', type: 'string' },
+        { caption: '入职时间', type: 'string' },
+        { caption: '职级', type: 'string' }
+    ],
+    rows: []
+};
+router.get('/downloadEmployee', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var result, excel, e_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, query_1.default(queryAllSQL)];
+            case 1:
+                result = _a.sent();
+                conf.rows = result.map(function (i) {
+                    return [i.id, i.name, i.department, i.hiredate, i.level];
+                });
+                excel = excel_export_1.default.execute(conf);
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+                res.setHeader('Content-Disposition', 'attachment; filename=Employee.xlsx');
+                res.end(excel, 'binary');
+                return [3 /*break*/, 3];
+            case 2:
+                e_5 = _a.sent();
+                res.send(e_5.toString());
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
 exports.default = router;

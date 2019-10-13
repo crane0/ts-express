@@ -1,7 +1,8 @@
 import express from 'express';
 // body-parser 是一个HTTP请求体解析中间件
 import bodyParser from 'body-parser';
-// import excelExport from 'excel-export';
+// 下载相关
+import excelExport from 'excel-export';
 import query from '../models/query';
 
 const router = express.Router();
@@ -115,30 +116,30 @@ router.post('/updateEmployee', async (req, res) => {
     }
 });
 
-// let conf: excelExport.Config = {
-//     cols: [
-//         { caption:'员工ID', type:'number'},
-//         { caption:'姓名', type:'string'},
-//         { caption:'部门', type:'string' },
-//         { caption:'入职时间', type:'string' },
-//         { caption:'职级', type:'string'}
-//     ],
-//     rows: []
-// };
+let conf: excelExport.Config = {
+    cols: [
+        { caption:'员工ID', type:'number'},
+        { caption:'姓名', type:'string'},
+        { caption:'部门', type:'string' },
+        { caption:'入职时间', type:'string' },
+        { caption:'职级', type:'string'}
+    ],
+    rows: []
+};
 
-// router.get('/downloadEmployee', async (req, res) => {
-//     try {
-//         let result = await query(queryAllSQL);
-//         conf.rows = result.map((i: any) => {
-//             return [i.id, i.name, i.department, i.hiredate, i.level];
-//         });
-//         let excel = excelExport.execute(conf);
-//         res.setHeader('Content-Type', 'application/vnd.openxmlformats');
-//         res.setHeader('Content-Disposition', 'attachment; filename=Employee.xlsx');
-//         res.end(excel, 'binary');
-//     } catch (e) {
-//         res.send(e.toString());
-//     }
-// });
+router.get('/downloadEmployee', async (req, res) => {
+    try {
+        let result = await query(queryAllSQL);
+        conf.rows = result.map((i: any) => {
+            return [i.id, i.name, i.department, i.hiredate, i.level];
+        });
+        let excel = excelExport.execute(conf);
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+        res.setHeader('Content-Disposition', 'attachment; filename=Employee.xlsx');
+        res.end(excel, 'binary');
+    } catch (e) {
+        res.send(e.toString());
+    }
+});
 
 export default router;
