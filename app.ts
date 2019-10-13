@@ -12,8 +12,10 @@ import express from 'express'
 import path from 'path'
 import cookieParser from 'cookie-parser'
 import logger from 'morgan'
+
 import indexRouter from './routes/index'
 import usersRouter from './routes/users'
+import employeeRouter from './routes/employee'
 
 
 var app = express();
@@ -30,6 +32,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+/* 
+这是主路由，子路由在 employeeRouter 中处理
+*/
+app.use('/api/employee', employeeRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

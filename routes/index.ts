@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'myExpress1' });
+  res.render('index', { title: 'myExpress12' });
 });
 
 export default router;

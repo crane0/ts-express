@@ -8,6 +8,6 @@ var express_1 = __importDefault(require("express"));
 var router = express_1.default.Router();
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    res.render('index', { title: 'myExpress1' });
+    res.render('index', { title: 'myExpress12' });
 });
 exports.default = router;

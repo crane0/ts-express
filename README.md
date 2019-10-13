@@ -2,8 +2,6 @@
 
 这是 [ts_react_app项目的redux版本](https://github.com/crane0/ts_react_app/tree/redux-version) 的服务端开发环境。
 
-对员工管理页面，员工查询，新增员工，编辑员工信息，删除员工，员工信息列表的导出，这些看代码自行完成。
-
 目前使用的数据，都是基于本地的，现在实现一个真实的 API Server，为应用提供数据。
 
 分为3节，
@@ -180,3 +178,41 @@ npm i nodemon -D
 当更改文件后（比如修改`routes/index.ts`的 title ），还是需要重新 `npm run build`，但服务会自动重启。刷新页面就会看到效果。
 
 以上，基于 ts 的服务端环境搭建完毕。
+
+
+
+## 39，实现数据库操作
+
+为了能接收客户端的请求，需要为 API Server 增加一些路由。
+
+在 `app.ts` 中，添加了一个路由`/api/employee`，在 `routes\employee.ts`中实现子路由，
+
+开启监听，并重新 build 之后，就可以在浏览器测试访问 `http://localhost:4001/api/employee/getEmployee`。
+
+### 1，数据库表创建
+
+数据库，employee_system
+
+
+3个表，
+- 员工列表 employee
+- 部门列表 department
+- 职级 level
+
+### 2，配置数据库连接，
+
+连接配置，`config\db.ts`
+
+封装连接数据库的请求，`models\query.ts`，
+
+使用的是 MySQL 的连接池进行操作，需要安装依赖
+```
+npm i mysql @types/mysql -D
+```
+
+### 3，连接数据库
+
+需要改造 `routes\employee.ts`，
+
+
+
